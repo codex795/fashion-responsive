@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Happy Birthday Mam 💖</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+
+    :root {
+      --primary: #00ffff;
+      --accent: #ff00ff;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      height: 100vh;
+      background: linear-gradient(135deg, #000000, #35003e, #004a7c);
+      font-family: "Poppins", sans-serif;
+      overflow: hidden;
+      position: relative;
+      color: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    /* sparks canvas sits over background but behind content */
+    #sparks {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      display: block;
+    }
+
+    /* glowing circle with mam photo */
+    .circle {
+      position: absolute;
+      width: 250px;
+      height: 250px;
+      border-radius: 50%;
+      overflow: hidden;
+      left: 8%;
+      top: 50%;
+      transform: translateY(-50%);
+      box-shadow: 0 0 40px var(--accent), 0 0 80px var(--primary);
+      z-index: 2;
+    }
+
+    .circle img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      display: block;
+    }
+
+    /* main card */
+    .wrapper {
+      width: 420px;
+      background: rgba(255, 255, 255, 0.08);
+      border: 2px solid var(--primary);
+      border-radius: 20px;
+      padding: 40px 24px;
+      text-align: center;
+      box-shadow: 0 0 30px var(--primary), 0 0 60px var(--accent);
+      backdrop-filter: blur(6px);
+      animation: glow 3s ease-in-out infinite alternate;
+      z-index: 3;
+      position: relative;
+    }
+
+    @keyframes glow {
+      from {
+        box-shadow: 0 0 20px var(--primary), 0 0 40px var(--accent);
+      }
+
+      to {
+        box-shadow: 0 0 50px #ffff66, 0 0 80px var(--primary);
+      }
+    }
+
+    .wrapper h1 {
+      color: var(--primary);
+      font-size: 34px;
+      margin: 0 0 8px;
+      text-shadow: 0 0 12px var(--primary);
+    }
+
+    .wrapper h2 {
+      color: #ff99ff;
+      font-size: 20px;
+      margin: 0 0 12px;
+    }
+
+    .wrapper p {
+      color: #fff;
+      font-size: 15px;
+      line-height: 1.6;
+    }
+
+    /* days box (right) */
+    .days-box {
+      position: absolute;
+      top: 50%;
+      right: 8%;
+      transform: translateY(-50%);
+      background: rgba(0, 0, 0, 0.55);
+      border: 2px solid var(--primary);
+      padding: 10px;
+      border-radius: 14px;
+      box-shadow: 0 0 20px var(--primary), 0 0 40px var(--accent);
+      z-index: 3;
+    }
+
+    .days-box img {
+      width: 180px;
+      height: 180px;
+      border-radius: 12px;
+      object-fit: cover;
+      box-shadow: 0 0 30px var(--primary);
+    }
+
+    .days-box h2 {
+      font-size: 20px;
+      margin: 0 0 8px;
+      color: #4dfcff;
+      text-shadow: 0 0 10px var(--primary);
+    }
+
+    .days-box p {
+      font-size: 36px;
+      margin: 0;
+      color: #fff;
+      font-weight: 700;
+      text-shadow: 0 0 18px var(--primary);
+    }
+
+    /* small responsive tweak */
+    @media (max-width:900px) {
+      .days-box {
+        right: 30%;
+        transform: translateY(157%);
+      }
+
+      .wrapper {
+        width: 340px;
+        padding: 30px 18px;
+      }
+
+      .circle {
+        left: 26%;
+        width: 200px;
+        height: 200px;
+        top: 16vh;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Sparks Canvas (wire-cracker style) -->
+  <canvas id="sparks"></canvas>
+
+  <!-- glowing circle photo -->
+  <div class="circle"><img src="logo/mam.jpg" alt="Mam photo"></div>
+
+  <!-- birthday card -->
+  <div class="wrapper">
+    <h1>🎂 Happy Birthday Mam 🎉</h1>
+    <h2>Wishing You a Day Full of Love & Joy</h2>
+    <p>Happy Birthday! Tum utne hi young lagte ho jitne apne last year lagte the… bas light thodi kam hai! 💖</p>
+  </div>
+
+  <!-- right side 9131 days -->
+  <div class="days-box">
+    <img src="logo/download (2).jpg" alt="">
+  </div>
+
+  <script>
+    // days calculation (same as before)
+    const birthDate = new Date("2000-01-01"); // change to mam's DOB
+    const today = new Date();
+    const daysLived = Math.floor((today - birthDate) / (1000 * 60 * 60 * 24));
+    document.getElementById('days').textContent = daysLived;
+
+    /* ---------------------------
+       Sparks / Wire-cracker effect
+       small particle system — lightweight
+       --------------------------- */
+    const canvas = document.getElementById('sparks');
+    const ctx = canvas.getContext('2d');
+    let W = canvas.width = window.innerWidth;
+    let H = canvas.height = window.innerHeight;
+
+    window.addEventListener('resize', () => {
+      W = canvas.width = window.innerWidth;
+      H = canvas.height = window.innerHeight;
+    });
+
+    // particle class
+    class Spark {
+      constructor(x, y) {
+        this.x = x;
+        this.y = y;
+        this.vx = (Math.random() - 0.5) * 1.6;        // horizontal drift
+        this.vy = - (1 + Math.random() * 3.2);        // upwards
+        this.life = 60 + Math.random() * 40;         // frames
+        this.size = 1 + Math.random() * 2.3;
+        this.hue = 10 + Math.random() * 50;          // warm tone
+        this.alpha = 1;
+      }
+      update() {
+        this.x += this.vx;
+        this.y += this.vy;
+        this.vy += 0.03; // gravity (slows upward motion)
+        this.life--;
+        this.alpha = Math.max(0, this.life / 100);
+      }
+      draw() {
+        ctx.beginPath();
+        // warm yellow/orange to pinkish
+        ctx.fillStyle = `hsla(${this.hue}, 100%, ${50 + Math.random() * 10}%, ${this.alpha})`;
+        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+        ctx.fill();
+      }
+    }
+
+    // continuous emitter along bottom-sides to mimic crackers
+    const sparks = [];
+    let emitCounter = 0;
+
+    function spawnSparksBurst(cx, count = 18) {
+      for (let i = 0; i < count; i++) {
+        const s = new Spark(cx + (Math.random() - 0.5) * 40, H - 20 + (Math.random() * 10));
+        // add a bit more horizontal velocity for bursts
+        s.vx += (Math.random() - 0.5) * 3;
+        s.vy = - (2 + Math.random() * 4);
+        s.size = 1 + Math.random() * 3;
+        s.life = 40 + Math.random() * 60;
+        s.hue = 20 + Math.random() * 40;
+        sparks.push(s);
+      }
+    }
+
+    // periodic tiny sparks along bottom to mimic cracklers
+    function emitLoop() {
+      emitCounter++;
+      // every ~20 frames spawn small clusters at random left/right bottom positions
+      if (emitCounter % 25 === 0) {
+        // left side
+        spawnSparksBurst(60 + Math.random() * 80, 8 + Math.floor(Math.random() * 6));
+        // right side
+        spawnSparksBurst(W - (60 + Math.random() * 80), 6 + Math.floor(Math.random() * 6));
+      }
+      // occasionally center burst
+      if (emitCounter % 180 === 0) {
+        spawnSparksBurst(W / 2 + (Math.random() - 0.5) * 100, 28 + Math.floor(Math.random() * 30));
+      }
+    }
+
+    // drawing loop
+    function loop() {
+      requestAnimationFrame(loop);
+      // subtle fade to create trails
+      ctx.globalCompositeOperation = 'source-over';
+      ctx.fillStyle = 'rgba(0,0,0,0.15)'; // adjust alpha for longer/shorter trails
+      ctx.fillRect(0, 0, W, H);
+
+      // additive for bright sparks
+      ctx.globalCompositeOperation = 'lighter';
+
+      // update/draw sparks
+      for (let i = sparks.length - 1; i >= 0; i--) {
+        const s = sparks[i];
+        s.update();
+        s.draw();
+        if (s.life <= 0 || s.y > H + 20) sparks.splice(i, 1);
+      }
+
+      emitLoop();
+    }
+
+    // start with a few bursts so background isn't empty
+    for (let i = 0; i < 4; i++) {
+      spawnSparksBurst(60 + i * 120, 10 + Math.floor(Math.random() * 10));
+      spawnSparksBurst(W - (60 + i * 120), 8 + Math.floor(Math.random() * 10));
+    }
+
+    loop();
+
+    // optional: click to add a bright burst (like a wirecracker hit)
+    window.addEventListener('click', (e) => {
+      spawnSparksBurst(e.clientX, 40 + Math.floor(Math.random() * 40));
+    });
+  </script>
+</body>
+
+</html>

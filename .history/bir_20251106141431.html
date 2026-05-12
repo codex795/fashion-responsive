@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Happy Birthday Tanav!</title>
+
+  <style>
+    @import url("https://fonts.googleapis.com/css?family=Poppins:400,500,600,700&display=swap");
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Poppins", sans-serif;
+    }
+
+    html, body {
+      display: grid;
+      height: 100%;
+      width: 100%;
+      place-items: center;
+      background-image: url("https://i.pinimg.com/originals/36/79/a5/3679a5e35cda35ba467115b41638b626.gif");
+      background-size: cover;
+      overflow-x: hidden;
+    }
+
+    p {
+      color: #86fcef;
+    }
+
+    h1 {
+      font-size: 60px;
+      color: cyan;
+      animation: glow 1s ease-in-out infinite alternate;
+    }
+
+    h3 {
+      color: cyan;
+    }
+
+    button {
+      display: inline-block;
+      position: absolute;
+      cursor: pointer;
+      font-weight: bold;
+      font-size: 20px;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color: #23252f;
+      text-decoration: none;
+      padding: 20px 45px;
+      border-radius: 9px;
+      background: #64ed85;
+      box-shadow: 3px 3px 6px #296137, -3px -3px 6px #9fffd3;
+      transition: all 0.3s;
+      background-repeat: no-repeat;
+      background-position: -135px -135px, 0 0;
+      background-image: -webkit-linear-gradient(
+        top left,
+        rgba(255, 255, 255, 0.2) 0%,
+        rgba(255, 255, 255, 0.2) 37%,
+        rgba(255, 255, 255, 0.8) 45%,
+        rgba(255, 255, 255, 0) 50%
+      );
+      background-size: 250% 250%, 100% 100%;
+      transition: background-position 0s ease;
+    }
+
+    button:hover {
+      transform: translate(-50%, -50%) scale(1.03);
+      background-position: 0 0, 0 0;
+      transition-duration: 0.9s;
+    }
+
+    button:active {
+      border-radius: 9px;
+      background: #64ed85;
+      box-shadow: inset 3px 3px 6px #296137, inset -3px -3px 6px #9fffd3;
+    }
+
+    .wrapper {
+      height: 400px;
+      width: 320px;
+      position: relative;
+      transform-style: preserve-3d;
+      perspective: 1000px;
+    }
+
+    .wrapper .card {
+      position: absolute;
+      height: 100%;
+      width: 100%;
+      padding: 5px;
+      background: linear-gradient(385deg, purple, #0004ff);
+      border-radius: 10px;
+      transform: translateY(0deg);
+      transform-style: preserve-3d;
+      backface-visibility: hidden;
+      box-shadow: 0px 10px 15px rgba(0, 0, 0, 0.1);
+      transition: transform 0.7s cubic-bezier(0.4, 0.2, 0.2, 1);
+    }
+
+    .wrapper:hover > .front-face {
+      transform: rotateY(-180deg);
+    }
+
+    .wrapper .card img {
+      height: 100%;
+      width: 100%;
+      object-fit: cover;
+      border-radius: 10px;
+    }
+
+    .wrapper .back-face {
+      display: flex;
+      align-items: center;
+      justify-content: space-evenly;
+      flex-direction: column;
+      transform: rotateY(180deg);
+    }
+
+    .wrapper:hover > .back-face {
+      transform: rotateY(0deg);
+    }
+
+    .wrapper .back-face img {
+      height: 150px;
+      width: 150px;
+      padding: 5px;
+      border-radius: 50%;
+      background: linear-gradient(375deg, #001aff, #0084ff);
+      box-shadow: 0 0 5px #d3b3fc, 0 0 25px #f1edf7, 0 0 50px #f2f0f5,
+        0 0 100px #c9b3fc, 0 0 170px #999aad;
+    }
+
+    .wrapper .back-face .info {
+      text-align: center;
+    }
+
+    .back-face .info p {
+      font-size: 17px;
+      color: black;
+      padding: 10px;
+    }
+
+    @-webkit-keyframes glow {
+      from {
+        text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px blue, 0 0 40px blue,
+          0 0 50px blue, 0 0 60px blueviolet, 0 0 70px blue;
+      }
+
+      to {
+        text-shadow: 0 0 20px #fff, 0 0 30px #4dfcff, 0 0 40px #4dfcff,
+          0 0 50px #4dfcff, 0 0 60px #4dfcff, 0 0 70px #4dfcff, 0 0 80px #4dfcff;
+      }
+    }
+
+    #fontsoide {
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+  <audio id="Tanav" src="https://jennierubyjanenini.github.io/Music-K-Files/happy%20birthday%20to%20you%20female%20voice%20wishes.mp3"></audio>
+
+  <h1>Happy Birthday</h1>
+  <h1>Tanav!!!</h1>
+
+  <button id="Date" onclick="SetDate()">Click me!</button>
+
+  <br><br><br><br><br><br><br>
+
+  <div id="wholeThingie">
+    <div class="wrapper">
+      <div class="card front-face" id="fontsoide">
+        <img src="https://i.gifer.com/origin/6a/6a5dc02cd17893a5ac3cb69f99035e78_w200.webp">
+      </div>
+
+      <div class="card back-face">
+        <img src="https://s3-whjr-v2-prod-bucket.whjr.online/8536ab4d-2b37-4263-a0d6-0d28bc41131d.jpeg">
+        <div class="info">
+          <hr><br>
+          <p>
+            Wish U a very Happy and Happiest Birthday Tanav! 🎂<br>
+            May Life Lead you to great happiness, success and hope that all your wishes come true!<br>
+            Thanks a lot for being my friend. Enjoy your day! Once again, Happy Birthday! 😊
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <br><br><br><br>
+
+    <div>
+      <img src="https://i.gifer.com/origin/f9/f90fc85cf18e351c565692dcb1c0feeb_w200.webp">
+      <h3>Hehe~ Thnx for viewing <br> ____By ur bestie Mahi____</h3><br>
+    </div>
+  </div>
+
+  <script>
+    function SetDate() {
+      document.getElementById("Tanav").play();
+    }
+  </script>
+</body>
+</html>
+

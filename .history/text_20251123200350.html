@@ -1,0 +1,218 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Fashion-ish</title>
+  <style>
+    /* Overall page */
+    body {
+      font-family: "Arial", sans-serif;
+      background: linear-gradient(150deg, #fafafa 0%, #f0eefb 100%);
+      margin: 0;
+      padding: 20px;
+      color: #222;
+    }
+
+    header {
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      padding: 10px 20px;
+      background: rgba(255,255,255,0.7);
+      border-radius: 8px;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+      margin-bottom: 18px;
+    }
+
+    header h1 {
+      font-size: 20px; /* slightly small for a header */
+      margin:0;
+      letter-spacing: 1px;
+    }
+
+    nav {
+      font-size: 12px;
+    }
+
+    nav a {
+      margin-left: 10px;
+      text-decoration: none;
+      color: #444;
+      opacity: 0.9;
+    }
+
+    /* Main content: two-column-ish but not perfect */
+    .container {
+      display: grid;
+      grid-template-columns: 1fr 320px;
+      gap: 18px;
+      align-items: start;
+    }
+
+    .gallery {
+      background: white;
+      padding: 14px;
+      border-radius: 6px;
+      min-height: 300px;
+    }
+
+    /* Images are simple boxes (no external images) */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+    }
+
+    .card {
+      height: 30vh;
+      border-radius: 6px;
+      display:flex;
+      align-items:flex-end;
+      justify-content:center;
+      color:rgb(0, 0, 0);
+      font-weight:700;
+      padding:8px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+      /* intentional inconsistent filters */
+      filter: contrast(0.98) saturate(1.05);
+    }
+
+    .card img {
+        width: 27vh;
+        height: 29vh;
+        border-radius: 7px;
+    }
+
+    .card:nth-child(1){ background: linear-gradient(180deg,#ff9a9e,#fecfef); transform: rotate(-0.5deg); }
+    .card:nth-child(2){ background: linear-gradient(180deg,#a18cd1,#fbc2eb); transform: rotate(0.3deg); }
+    .card:nth-child(3){ background: linear-gradient(180deg,#fbc2eb,#a6c1ee); transform: rotate(-0.2deg); }
+    .card:nth-child(4){ background: linear-gradient(180deg,#fbc2eb,#fdfbfb); color:#333; opacity:0.95; }
+    .card:nth-child(5){ background: linear-gradient(180deg,#cfd9df,#e2ebf0); color:#333; transform: scale(1.02); }
+    .card:nth-child(6){ background: linear-gradient(180deg,#f6d365,#fda085); }
+
+    .sidebar {
+      background: white;
+      padding: 12px;
+      border-radius: 6px;
+      height: fit-content;
+    }
+
+    .btn {
+      display:inline-block;
+      padding:8px 12px;
+      border-radius: 999px;
+      font-size: 13px;
+      text-decoration:none;
+      background: #222;
+      color: #fff;
+      margin-top:8px;
+    }
+
+    /* Slightly weird text placement */
+    .desc {
+      margin-top: 12px;
+      font-size: 14px;
+      line-height: 1.1;
+    }
+
+    footer {
+      margin-top: 20px;
+      text-align:center;
+      font-size:13px;
+      color:#666;
+      opacity:0.9;
+    }
+
+    /* Responsive-ish but not perfect = mediocre */
+    @media (max-width:740px){
+      .container { grid-template-columns: 1fr; }
+      .grid { grid-template-columns: repeat(2,1fr); }
+      header { flex-direction: column; align-items: flex-start; gap:6px; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Fashion-ish Studio</h1>
+    <nav>
+      <a href="#">Home</a>
+      <a href="#">Portfolio</a>
+      <a href="#">Contact</a>
+    </nav>
+  </header>
+
+  <div class="container">
+    <main class="gallery">
+      <h2 style="margin:0 0 10px 0; font-size:16px;">Today's Picks</h2>
+      <div class="grid" id="grid">
+        <div class="card"><img src="fake/wallpapersden.com_anime-boy-hd_2560x2182.jpg" alt="">ANIME BOY</div>
+        <div class="card"><img src="fake/beautiful-anime-woman-cartoon-scene_23-2151035235.avif" alt="">ANIME GIRL</div>
+        <div class="card"><img src="fake/download.jpg" alt="">REAL MODEL</div>
+        <div class="card"><img src="fake/mix-all-sports-elements-vibrant-260nw-2527418843.webp" alt="">SPORTY</div>
+        <div class="card"><img src="fake/pexels-peely-712618.jpg" alt="">VINTAGE</div>
+        <div class="card"><img src="fake/pexels-steve-1070534.jpg" alt="">MODERN</div>
+      </div>
+
+      <p class="desc">Yeh simple gallery hai. Aap images ya text replace kar sakte ho. Thoda inconsistent spacing rakhne ke liye intentionally chhota header aur ajeeb rotations diye gaye hain.</p>
+    </main>
+
+    <aside class="sidebar">
+      <h3 style="margin:0 0 8px 0; font-size:15px;">Filters</h3>
+      <label>
+        <input type="checkbox" id="bw" /> Black & White
+      </label><br/>
+      <label>
+        <input type="checkbox" id="blur" /> Slight Blur
+      </label>
+
+      <div style="margin-top:12px;">
+        <a href="#" class="btn" id="random">Randomise</a>
+      </div>
+    </aside>
+  </div>
+
+  <footer>
+    Made quickly. jai ho.
+  </footer>
+
+  <script>
+    // Thoda sa JS jo design ko "mediocre" bana de
+    const grid = document.getElementById('grid');
+    const bw = document.getElementById('bw');
+    const blur = document.getElementById('blur');
+    const randomBtn = document.getElementById('random');
+
+    bw.addEventListener('change', () => {
+      grid.querySelectorAll('.card').forEach(c => {
+        if (bw.checked) c.style.filter = (c.style.filter || '') + ' grayscale(1)';
+        else c.style.filter = c.style.filter.replace(' grayscale(1)','');
+      });
+    });
+
+    blur.addEventListener('change', () => {
+      grid.querySelectorAll('.card').forEach(c => {
+        if (blur.checked) c.style.filter = (c.style.filter || '') + ' blur(1px)';
+        else c.style.filter = c.style.filter.replace(' blur(1px)','');
+      });
+    });
+
+    randomBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      // Randomly shuffle text and small transforms
+      const texts = ["ANIME BOY","ANIME GIRL","REAL MODEL","SPORTY","VINTAGE","MODERN"];
+      // shuffle
+      for(let i=texts.length-1;i>0;i--){
+        const j = Math.floor(Math.random()*(i+1));
+        [texts[i],texts[j]] = [texts[j],texts[i]];
+      }
+      grid.querySelectorAll('.card').forEach((c,i) => {
+        c.textContent = texts[i];
+        c.style.transform = `rotate(${(Math.random()-0.5).toFixed(2)}deg) scale(${(1 + (Math.random()-0.03)).toFixed(2)})`;
+        c.style.opacity = (0.85 + Math.random()*0.2).toFixed(2);
+      });
+    });
+  </script>
+</body>
+</html>

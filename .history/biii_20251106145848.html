@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday Mam 💖</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            background: linear-gradient(135deg, #000000, #35003e, #004a7c);
+            font-family: "Poppins", sans-serif;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            color: white;
+        }
+
+        /* glowing circle with mam photo */
+        .circle {
+            position: absolute;
+            width: 250px;
+            height: 250px;
+            border-radius: 50%;
+            overflow: hidden;
+            /* image bahar na jaye */
+            left: 10%;
+            top: 50%;
+            transform: translateY(-50%);
+            box-shadow: 0 0 40px #ff00ff, 0 0 80px #00ffff;
+            animation: rotate 10s linear infinite;
+        }
+
+        .circle img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            /* image perfectly circle ke andar fit hogi */
+            object-position: center;
+        }
+
+        @keyframes rotate {
+            0% {
+                transform: translateY(-50%) rotate(0deg);
+            }
+
+            100% {
+                transform: translateY(-50%) rotate(360deg);
+            }
+        }
+
+        /* Birthday Card */
+        .wrapper {
+            width: 400px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid #00ffff;
+            border-radius: 20px;
+            padding: 40px 20px;
+            text-align: center;
+            box-shadow: 0 0 30px #00ffff, 0 0 60px #ff00ff;
+            backdrop-filter: blur(10px);
+            animation: glow 3s ease-in-out infinite alternate;
+            z-index: 2;
+        }
+
+        @keyframes glow {
+            from {
+                box-shadow: 0 0 20px #00ffff, 0 0 40px #ff00ff;
+            }
+
+            to {
+                box-shadow: 0 0 50px #ffff00, 0 0 80px #00ffff;
+            }
+        }
+
+        .wrapper h1 {
+            color: #00ffff;
+            font-size: 36px;
+            margin-bottom: 10px;
+            text-shadow: 0 0 15px #00ffff, 0 0 30px #ff00ff;
+        }
+
+        .wrapper h2 {
+            color: #ff99ff;
+            font-size: 22px;
+            margin-bottom: 20px;
+        }
+
+        .wrapper p {
+            color: #ffffff;
+            font-size: 16px;
+            line-height: 1.6;
+            margin-top: 10px;
+        }
+
+        /* right side days counter */
+        .days-box {
+            position: absolute;
+            top: 50%;
+            right: 10%;
+            transform: translateY(-50%);
+            background: rgba(0, 0, 0, 0.6);
+            border: 2px solid #00ffff;
+            padding: 20px 40px;
+            border-radius: 15px;
+            color: #00ffff;
+            text-align: center;
+            box-shadow: 0 0 20px #00ffff, 0 0 40px #ff00ff;
+            animation: glowBox 2s ease-in-out infinite alternate;
+        }
+
+        .days-box h2 {
+            font-size: 26px;
+            margin-bottom: 10px;
+            color: #4dfcff;
+            text-shadow: 0 0 10px #00ffff, 0 0 20px #ff00ff;
+        }
+
+        .days-box p {
+            font-size: 38px;
+            font-weight: bold;
+            color: #fff;
+            text-shadow: 0 0 20px #00ffff, 0 0 40px #ff00ff;
+        }
+
+        @keyframes glowBox {
+            from {
+                box-shadow: 0 0 20px #00ffff, 0 0 40px #ff00ff;
+            }
+
+            to {
+                box-shadow: 0 0 40px #ffff00, 0 0 80px #00ffff;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- glowing circle photo -->
+    <div class="circle"><img src="logo/mam.png" alt=""></div>
+
+    <!-- birthday card -->
+    <div class="wrapper">
+        <h1>🎂 Happy Birthday Mam 🎉</h1>
+        <h2>Wishing You a Day Full of Love & Joy</h2>
+        <p>
+            You are an inspiration, a mentor, and a light that brightens everyone’s path.
+            May your day be filled with happiness, blessings, and all the things you love most. 💖
+        </p>
+    </div>
+
+    <!-- right side 9131 days -->
+    <div class="days-box">
+        <h2>Days Lived</h2>
+        <p id="days">9131</p>
+    </div>
+
+    <script>
+        // Replace with Mam's birthdate (YYYY-MM-DD)
+        const birthDate = new Date("2000-01-01");
+        const today = new Date();
+        const daysLived = Math.floor((today - birthDate) / (1000 * 60 * 60 * 24));
+        document.getElementById("days").textContent = daysLived;
+    </script>
+
+</body>
+
+</html>

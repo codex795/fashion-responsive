@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy Birthday Mam 💖</title>
+<style>
+  body {
+    margin: 0;
+    background: #020202;
+    overflow: hidden;
+    color: white;
+    font-family: "Poppins", sans-serif;
+  }
+  canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: block;
+  }
+
+  h1 {
+    position: absolute;
+    top: 10%;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 4em;
+    color: #fff;
+    text-shadow: 0 0 20px #ff00cc, 0 0 30px #00ccff;
+    z-index: 2;
+  }
+
+  .photo {
+    position: absolute;
+    top: 20%;
+    right: 5%;
+    width: 180px;
+    height: 180px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 4px solid #00e6b8;
+    box-shadow: 0 0 30px #00ffe1;
+    z-index: 2;
+  }
+  .photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .days {
+    position: absolute;
+    top: 60%;
+    right: 8%;
+    font-size: 24px;
+    color: #00ffe1;
+    background: rgba(255,255,255,0.1);
+    padding: 10px 16px;
+    border-radius: 10px;
+    border: 1px solid #00ffe1;
+    box-shadow: 0 0 10px #00e6b8;
+    z-index: 2;
+  }
+</style>
+</head>
+<body>
+  <canvas id="sparks"></canvas>
+  <canvas id="birthday"></canvas>
+
+  <h1>🎉 Happy Birthday Mam! 🎂</h1>
+
+  <div class="photo">
+    <img src="mam.jpg" alt="Mam Photo">
+  </div>
+
+  <div class="days">9131 Days of Awesomeness 😄</div>
+
+<script>
+// 🎇 1️⃣ — Bottom Sparks (your old firecracker effect)
+const canvas1 = document.getElementById("sparks");
+const ctx1 = canvas1.getContext("2d");
+canvas1.width = innerWidth;
+canvas1.height = innerHeight;
+
+class Spark {
+  constructor() {
+    this.x = Math.random() * canvas1.width;
+    this.y = canvas1.height;
+    this.size = Math.random() * 2 + 1;
+    this.speedY = Math.random() * -3 - 2;
+    this.color = `hsl(${Math.random() * 360},100%,60%)`;
+  }
+  update() {
+    this.y += this.speedY;
+    this.size *= 0.98;
+  }
+  draw() {
+    ctx1.beginPath();
+    ctx1.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+    ctx1.fillStyle = this.color;
+    ctx1.fill();
+  }
+}
+let sparks = [];
+function handleSparks() {
+  if (sparks.length < 200) sparks.push(new Spark());
+  for (let i = 0; i < sparks.length; i++) {
+    sparks[i].update();
+    sparks[i].draw();
+    if (sparks[i].size < 0.3) sparks.splice(i, 1);
+  }
+}
+function animateSparks() {
+  ctx1.fillStyle = "rgba(0,0,0,0.1)";
+  ctx1.fillRect(0, 0, canvas1.width, canvas1.height);
+  handleSparks();
+  requestAnimationFrame(animateSparks);
+}
+animateSparks();
+
+// 🎆 2️⃣ — Sky Fireworks (your current big explosions)
+const canvas2 = document.getElementById("birthday");
+const ctx2 = canvas2.getContext("2d");
+canvas2.width = innerWidth;
+canvas2.height = innerHeight;
+
+const PI2 = Math.PI * 2;
+const random = (min, max) => Math.random() * (max - min + 1) + min | 0;
+const timestamp = _ => new Date().getTime();
+
+class Birthday {
+  constructor() {
+    this.resize();
+    this.fireworks = [];
+    this.counter = 0;
+  }
+  resize() {
+    this.width = canvas2.width = window.innerWidth;
+    this.height = canvas2.height = window.innerHeight;
+    this.spawnA = this.width / 4;
+    this.spawnB = this.width * 3 / 4;
+    this.spawnC = this.height * 0.1;
+    this.spawnD = this.height * 0.5;
+  }
+  onClick(evt) {
+    let x = evt.clientX || evt.touches && evt.touches[0].pageX;
+    let y = evt.clientY || evt.touches && evt.touches[0].pageY;
+    for (let i = 0; i < 4; i++)
+      this.fireworks.push(new Firework(
+        random(this.spawnA, this.spawnB),
+        this.height,
+        x, y,
+        random(0, 260),
+        random(30, 110)
+      ));
+  }
+  update(delta) {
+    ctx2.globalCompositeOperation = "hard-light";
+    ctx2.fillStyle = `rgba(20,20,20,${7 * delta})`;
+    ctx2.fillRect(0, 0, this.width, this.height);
+    ctx2.globalCompositeOperation = "lighter";
+    for (let firework of this.fireworks) firework.update(delta);
+    this.counter += delta * 3;
+    if (this.counter >= 1) {
+      this.fireworks.push(new Firework(
+        random(this.spawnA, this.spawnB),
+        this.height,
+        random(0, this.width),
+        random(this.spawnC, this.spawnD),
+        random(0, 360),
+        random(30, 110)
+      ));
+      this.counter = 0;
+    }
+    if (this.fireworks.length > 500)
+      this.fireworks = this.fireworks.filter(f => !f.dead);
+  }
+}
+
+class Firework {
+  constructor(x, y, targetX, targetY, shade, offsprings) {
+    this.dead = false;
+    this.offsprings = offsprings;
+    this.x = x;
+    this.y = y;
+    this.targetX = targetX;
+    this.targetY = targetY;
+    this.shade = shade;
+    this.history = [];
+  }
+  update(delta) {
+    if (this.dead) return;
+    let xDiff = this.targetX - this.x;
+    let yDiff = this.targetY - this.y;
+    if (Math.abs(xDiff) > 3 || Math.abs(yDiff) > 3) {
+      this.x += xDiff * 2 * delta;
+      this.y += yDiff * 2 * delta;
+      this.history.push({ x: this.x, y: this.y });
+      if (this.history.length > 20) this.history.shift();
+    } else {
+      if (this.offsprings && !this.madeChilds) {
+        let babies = this.offsprings / 2;
+        for (let i = 0; i < babies; i++) {
+          let targetX = this.x + this.offsprings * Math.cos(PI2 * i / babies);
+          let targetY = this.y + this.offsprings * Math.sin(PI2 * i / babies);
+          birthday.fireworks.push(new Firework(this.x, this.y, targetX, targetY, this.shade, 0));
+        }
+      }
+      this.madeChilds = true;
+      this.history.shift();
+    }
+    if (this.history.length === 0) this.dead = true;
+    else if (this.offsprings) {
+      for (let i = 0; i < this.history.length; i++) {
+        let point = this.history[i];
+        ctx2.beginPath();
+        ctx2.fillStyle = `hsl(${this.shade},100%,${i}%)`;
+        ctx2.arc(point.x, point.y, 1, 0, PI2);
+        ctx2.fill();
+      }
+    } else {
+      ctx2.beginPath();
+      ctx2.fillStyle = `hsl(${this.shade},100%,50%)`;
+      ctx2.arc(this.x, this.y, 1, 0, PI2);
+      ctx2.fill();
+    }
+  }
+}
+
+let birthday = new Birthday();
+let then = timestamp();
+
+function loop() {
+  requestAnimationFrame(loop);
+  let now = timestamp();
+  let delta = now - then;
+  then = now;
+  birthday.update(delta / 1000);
+}
+loop();
+
+window.onresize = () => birthday.resize();
+document.onclick = e => birthday.onClick(e);
+document.ontouchstart = e => birthday.onClick(e);
+</script>
+</body>
+</html>

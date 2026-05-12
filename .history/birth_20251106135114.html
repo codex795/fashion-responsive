@@ -1,0 +1,151 @@
+> ATI:
+<!doctype html>
+<html lang="hi">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Happy Birthday — Fancy</title>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{height:100%}
+  body{
+    display:flex;align-items:center;justify-content:center;
+    background: linear-gradient(135deg,#051023 0%, #071e2a 60%);
+    font-family: Inter, 'Segoe UI', Roboto, sans-serif;color:#ecfbf7;
+    overflow:hidden;
+  }
+  .card{
+    width:920px; max-width:96%; padding:40px; border-radius:18px;
+    background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+    box-shadow: 0 12px 40px rgba(3,8,26,0.7); text-align:center; position:relative;
+    border:1px solid rgba(0,255,150,0.06);
+  }
+  h1{font-size:54px; margin-bottom:6px; letter-spacing:1px;}
+  .typed{color:#b6ffdb; font-size:20px; height:26px; margin-bottom:18px}
+  .btns{margin-top:18px}
+  button{padding:10px 16px;border-radius:999px;border:none;background:rgba(0,255,140,0.12);color:#dfffe9;font-weight:600; cursor:pointer;margin:0 6px}
+  canvas{position:fixed; inset:0; pointer-events:none}
+  .author{margin-top:14px;color:rgba(220,255,240,0.6)}
+</style>
+</head>
+<body>
+  <canvas id="confetti"></canvas>
+  <div class="card">
+    <h1 id="title">Happy Birthday — Mam!</h1>
+    <div class="typed" id="typed"></div>
+    <div class="btns">
+      <button id="playSound">Play Music</button>
+      <button id="downloadPNG">Download Image</button>
+    </div>
+    <div class="author">Open this file in Chrome/Edge for best effects</div>
+  </div>
+
+<script>
+/* Typed text */
+const messages = [
+  "Aaj aapka din bohot khaas hai.",
+  "Hum sab aapko dil se wish karte hain 🎉",
+  "Khush raho, swasth raho, aur hamesha muskurate raho 😊"
+];
+let idx=0, pos=0;
+const typed = document.getElementById('typed');
+function typeLoop(){
+  if(idx >= messages.length) { idx = 0; }
+  const msg = messages[idx];
+  if(pos <= msg.length){
+    typed.textContent = msg.slice(0,pos);
+    pos++;
+    setTimeout(typeLoop, 60);
+  } else {
+    setTimeout(()=>{ pos=0; idx++; typeLoop(); }, 1800);
+  }
+}
+typeLoop();
+
+/* Simple confetti canvas */
+const c = document.getElementById('confetti');
+const ctx = c.getContext('2d');
+function resize(){ c.width = innerWidth; c.height = innerHeight; }
+addEventListener('resize', resize); resize();
+
+const colors = ["#00e676","#00bcd4","#ff4081","#ffd740","#b388ff"];
+let pieces = [];
+function rand(min,max){ return Math.random()*(max-min)+min; }
+function createPiece(){
+  pieces.push({
+    x: rand(0, c.width),
+    y: rand(-50, -10),
+    w: rand(6, 12),
+    h: rand(8, 18),
+    vx: rand(-0.7,0.7),
+    vy: rand(1.5, 4),
+    r: rand(0, 360),
+    vr: rand(-8,8),
+    color: colors[Math.floor(rand(0, colors.length))]
+  });
+}
+for(let i=0;i<120;i++) createPiece();
+
+function update(){
+  ctx.clearRect(0,0,c.width,c.height);
+  for(let i=0;i<pieces.length;i++){
+    const p = pieces[i];
+    p.x += p.vx;
+    p.y += p.vy;
+    p.r += p.vr;
+    ctx.save();
+    ctx.translate(p.x, p.y);
+    ctx.rotate(p.r * Math.PI/180);
+    ctx.fillStyle = p.color;
+    ctx.fillRect(-p.w/2, -p.h/2, p.w, p.h);
+    ctx.restore();
+    if(p.y > c.height + 40){
+      pieces.splice(i,1);
+      i--;
+      createPiece();
+    }
+  }
+  requestAnimationFrame(update);
+}
+update();
+
+/* Optional music (you can replace source) */
+let audio;
+document.getElementById('playSound').addEventListener('click', ()=>{
+  if(!audio){
+    audio = new Audio(); 
+    audio.src = "https://cdn.pixabay.com/download/audio/2022/03/15/audio_0f0b2f8d6f.mp3?filename=happy-ukulele-5151.mp3";
+    audio.loop = true;
+  }
+  audio.paused ? audio.play() : audio.pause();
+});
+
+/* Download a PNG snapshot */
+document.getElementById('downloadPNG').addEventListener('click', ()=>{
+  // draw card area into an offscreen canvas for snapshot
+
+
+const el = document.querySelector('.card');
+  const rect = el.getBoundingClientRect();
+  const out = document.createElement('canvas');
+  out.width = rect.width; out.height = rect.height;
+  const octx = out.getContext('2d');
+  // simple background
+  octx.fillStyle = "#071e2a";
+  octx.fillRect(0,0,out.width,out.height);
+  // draw title text
+  octx.fillStyle = "#e6fff5";
+  octx.font = "38px Segoe UI";
+  octx.fillText(document.getElementById('title').textContent, 20, 60);
+  octx.font = "18px Segoe UI";
+  octx.fillStyle = "#b6ffdb";
+  octx.fillText(typed.textContent, 20, 100);
+  // convert to image
+  const link = document.createElement('a');
+  link.href = out.toDataURL("image/png");
+  link.download = "birthday_card.png";
+  link.click();
+});
+</script>
+</body>
+</html>

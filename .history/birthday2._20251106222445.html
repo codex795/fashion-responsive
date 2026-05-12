@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Happy Birthday Mam 💖</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+
+        :root {
+            --primary: #00ffff;
+            --accent: #ff00ff;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            background: linear-gradient(135deg, #000000, #35003e, #004a7c);
+            font-family: "Poppins", sans-serif;
+            overflow: hidden;
+            position: relative;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        canvas {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            pointer-events: none;
+            display: block;
+        }
+
+        /* glowing circle with mam photo */
+        .circle {
+            position: absolute;
+            width: 250px;
+            height: 250px;
+            border-radius: 50%;
+            overflow: hidden;
+            left: 8%;
+            top: 50%;
+            transform: translateY(-50%);
+            box-shadow: 0 0 40px var(--accent), 0 0 80px var(--primary);
+            z-index: 2;
+        }
+
+        .circle img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+            display: block;
+        }
+
+        /* main card */
+        .wrapper {
+            left: 70px;
+            width: 420px;
+            background: rgba(255, 255, 255, 0.08);
+            border: 2px solid var(--primary);
+            border-radius: 20px;
+            padding: 40px 24px;
+            text-align: center;
+            box-shadow: 0 0 30px var(--primary), 0 0 60px var(--accent);
+            backdrop-filter: blur(6px);
+            animation: glow 3s ease-in-out infinite alternate;
+            z-index: 3;
+            position: relative;
+        }
+
+        @keyframes glow {
+            from {
+                box-shadow: 0 0 20px var(--primary), 0 0 40px var(--accent);
+            }
+
+            to {
+                box-shadow: 0 0 50px #ffff66, 0 0 80px var(--primary);
+            }
+        }
+
+        .wrapper h1 {
+            color: var(--primary);
+            font-size: 34px;
+            margin: 0 0 8px;
+            text-shadow: 0 0 12px var(--primary);
+        }
+
+        .wrapper h2 {
+            color: #ff99ff;
+            font-size: 20px;
+            margin: 0 0 12px;
+        }
+
+        .wrapper p {
+            color: #fff;
+            font-size: 15px;
+            line-height: 1.6;
+        }
+
+        /* right side image box */
+        .days-box {
+            position: absolute;
+            top: 40%;
+            right: 8%;
+            transform: translateY(-50%);
+            background: rgba(0, 0, 0, 0.55);
+            border: 2px solid var(--primary);
+            padding: 10px;
+            border-radius: 14px;
+            box-shadow: 0 0 20px var(--primary), 0 0 40px var(--accent);
+            z-index: 3;
+        }
+
+        .days-box img {
+            width: 180px;
+            height: 180px;
+            border-radius: 12px;
+            object-fit: cover;
+            box-shadow: 0 0 30px var(--primary);
+        }
+
+        /* play button */
+
+        @media (max-width:900px) {
+            .days-box {
+                right: 23%;
+                transform: translateY(99%);
+            }
+
+            .wrapper {
+                left: 44px;
+                width: 253px;
+                height: 310px;
+                padding: 30px 18px;
+            }
+
+            .circle {
+                left: 26%;
+                width: 200px;
+                height: 200px;
+                top: 16vh;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <canvas id="sparks"></canvas>
+    <canvas id="fireworks"></canvas>
+
+    <div class="circle"><img src="logo/mam.jpg" alt="Mam photo"></div>
+
+    <div class="wrapper">
+        <h1>🎂 Happy Birthday Mam 🎉</h1>
+        <h2>Wishing You a Day Full of Love & Joy</h2>
+        <p>Happy Birthday! Tum utni hi young lagti ho jitni apne last year lagti thi… bas light thodi kam hai! 💖</p>
+    </div>
+
+    <div class="days-box">
+        <img src="logo/child.jpg" height="100px" alt="">
+    </div>
+
+    <button class="play-btn" onclick="toggleSong()">🎵 Play Song</button>
+    <audio id="song" src="birthday.mp3"></audio>
+
+    <script>
+        // 🔥 Wirecracker Sparks
+        const sparkCanvas = document.getElementById('sparks');
+        const sctx = sparkCanvas.getContext('2d');
+        let SW = sparkCanvas.width = window.innerWidth;
+        let SH = sparkCanvas.height = window.innerHeight;
+
+        window.addEventListener('resize', () => {
+            SW = sparkCanvas.width = window.innerWidth;
+            SH = sparkCanvas.height = window.innerHeight;
+            fCanvas.width = window.innerWidth;
+            fCanvas.height = window.innerHeight;
+        });
+
+        class Spark {
+            constructor(x, y) {
+                this.x = x; this.y = y;
+                this.vx = (Math.random() - 0.5) * 1.6;
+                this.vy = - (1 + Math.random() * 3.2);
+                this.life = 60 + Math.random() * 40;
+                this.size = 1 + Math.random() * 2.3;
+                this.hue = 10 + Math.random() * 50;
+                this.alpha = 1;
+            }
+            update() {
+                this.x += this.vx;
+                this.y += this.vy;
+                this.vy += 0.03;
+                this.life--;
+                this.alpha = Math.max(0, this.life / 100);
+            }
+            draw() {
+                sctx.beginPath();
+                sctx.fillStyle = `hsla(${this.hue},100%,${50 + Math.random() * 10}%,${this.alpha})`;
+                sctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                sctx.fill();
+            }
+        }
+
+        const sparks = [];
+        function spawnSparksBurst(cx, count = 18) {
+            for (let i = 0; i < count; i++) {
+                const s = new Spark(cx + (Math.random() - 0.5) * 40, SH - 20 + (Math.random() * 10));
+                s.vx += (Math.random() - 0.5) * 3;
+                s.vy = - (2 + Math.random() * 4);
+                s.size = 1 + Math.random() * 3;
+                s.life = 40 + Math.random() * 60;
+                s.hue = 20 + Math.random() * 40;
+                sparks.push(s);
+            }
+        }
+
+        let emitCounter = 0;
+        function emitLoop() {
+            emitCounter++;
+            if (emitCounter % 25 === 0) {
+                spawnSparksBurst(60 + Math.random() * 80, 8 + Math.floor(Math.random() * 6));
+                spawnSparksBurst(SW - (60 + Math.random() * 80), 6 + Math.floor(Math.random() * 6));
+            }
+            if (emitCounter % 180 === 0) {
+                spawnSparksBurst(SW / 2 + (Math.random() - 0.5) * 100, 28 + Math.floor(Math.random() * 30));
+            }
+        }
+
+        function sparkLoop() {
+            requestAnimationFrame(sparkLoop);
+            sctx.globalCompositeOperation = 'source-over';
+            sctx.fillStyle = 'rgba(0,0,0,0.15)';
+            sctx.fillRect(0, 0, SW, SH);
+            sctx.globalCompositeOperation = 'lighter';
+            for (let i = sparks.length - 1; i >= 0; i--) {
+                const s = sparks[i];
+                s.update();
+                s.draw();
+                if (s.life <= 0 || s.y > SH + 20) sparks.splice(i, 1);
+            }
+            emitLoop();
+        }
+        for (let i = 0; i < 4; i++) {
+            spawnSparksBurst(60 + i * 120, 10 + Math.floor(Math.random() * 10));
+            spawnSparksBurst(SW - (60 + i * 120), 8 + Math.floor(Math.random() * 10));
+        }
+        sparkLoop();
+
+        // 🎆 Fireworks animation
+        const fCanvas = document.getElementById('fireworks');
+        const fctx = fCanvas.getContext('2d');
+        fCanvas.width = window.innerWidth;
+        fCanvas.height = window.innerHeight;
+
+        const PI2 = Math.PI * 2;
+        const random = (min, max) => Math.random() * (max - min + 1) + min | 0;
+        const timestamp = _ => new Date().getTime();
+
+        class Birthday {
+            constructor() {
+                this.resize();
+                this.fireworks = [];
+                this.counter = 0;
+            }
+            resize() {
+                this.width = fCanvas.width = window.innerWidth;
+                let center = this.width / 2 | 0;
+                this.spawnA = center - center / 4 | 0;
+                this.spawnB = center + center / 4 | 0;
+                this.height = fCanvas.height = window.innerHeight;
+                this.spawnC = this.height * .1;
+                this.spawnD = this.height * .5;
+            }
+            onClick(evt) {
+                let x = evt.clientX || evt.touches && evt.touches[0].pageX;
+                let y = evt.clientY || evt.touches && evt.touches[0].pageY;
+                let count = random(3, 5);
+                for (let i = 0; i < count; i++) this.fireworks.push(new Firework(
+                    random(this.spawnA, this.spawnB),
+                    this.height, x, y, random(0, 260), random(30, 110)
+                ));
+                this.counter = -1;
+            }
+            update(delta) {
+                fctx.globalCompositeOperation = 'hard-light';
+                fctx.fillStyle = `rgba(20,20,20,${7 * delta})`;
+                fctx.fillRect(0, 0, this.width, this.height);
+
+                fctx.globalCompositeOperation = 'lighter';
+                for (let firework of this.fireworks) firework.update(delta);
+
+                this.counter += delta * 3;
+                if (this.counter >= 1) {
+                    this.fireworks.push(new Firework(
+                        random(this.spawnA, this.spawnB),
+                        this.height,
+                        random(0, this.width),
+                        random(this.spawnC, this.spawnD),
+                        random(0, 360),
+                        random(30, 110)
+                    ));
+                    this.counter = 0;
+                }
+                if (this.fireworks.length > 1000)
+                    this.fireworks = this.fireworks.filter(firework => !firework.dead);
+            }
+        }
+
+        class Firework {
+            constructor(x, y, targetX, targetY, shade, offsprings) {
+                this.dead = false;
+                this.offsprings = offsprings;
+                this.x = x; this.y = y;
+                this.targetX = targetX;
+                this.targetY = targetY;
+                this.shade = shade;
+                this.history = [];
+            }
+            update(delta) {
+                if (this.dead) return;
+                let xDiff = this.targetX - this.x;
+                let yDiff = this.targetY - this.y;
+                if (Math.abs(xDiff) > 3 || Math.abs(yDiff) > 3) {
+                    this.x += xDiff * 2 * delta;
+                    this.y += yDiff * 2 * delta;
+                    this.history.push({ x: this.x, y: this.y });
+                    if (this.history.length > 20) this.history.shift();
+                } else {
+                    if (this.offsprings && !this.madeChilds) {
+                        let babies = this.offsprings / 2;
+                        for (let i = 0; i < babies; i++) {
+                            let targetX = this.x + this.offsprings * Math.cos(PI2 * i / babies) | 0;
+                            let targetY = this.y + this.offsprings * Math.sin(PI2 * i / babies) | 0;
+                            birthday.fireworks.push(new Firework(this.x, this.y, targetX, targetY, this.shade, 0));
+                        }
+                    }
+                    this.madeChilds = true;
+                    this.history.shift();
+                }
+                if (this.history.length === 0) this.dead = true;
+                else if (this.offsprings) {
+                    for (let i = 0; this.history.length > i; i++) {
+                        let point = this.history[i];
+                        fctx.beginPath();
+                        fctx.fillStyle = 'hsl(' + this.shade + ',100%,' + i + '%)';
+                        fctx.arc(point.x, point.y, 1, 0, PI2, false);
+                        fctx.fill();
+                    }
+                } else {
+                    fctx.beginPath();
+                    fctx.fillStyle = 'hsl(' + this.shade + ',100%,50%)';
+                    fctx.arc(this.x, this.y, 1, 0, PI2, false);
+                    fctx.fill();
+                }
+            }
+        }
+
+        let birthday = new Birthday();
+        let then = timestamp();
+        window.onresize = () => birthday.resize();
+        document.onclick = evt => birthday.onClick(evt);
+        document.ontouchstart = evt => birthday.onClick(evt);
+
+        (function loop() {
+            requestAnimationFrame(loop);
+            let now = timestamp();
+            let delta = now - then;
+            then = now;
+            birthday.update(delta / 1000);
+        })();
+
+     
+        
+        
+        
+    </script>
+</body>
+
+</html>
