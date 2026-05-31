@@ -9,7 +9,6 @@ body {
     justify-content: center;
     gap: 40px;
     background-color: rgb(62 92 96 / 84%);
-    min-height: 80vh;
     margin: 0 33px;
     border-radius: 15px;
    
@@ -39,8 +38,6 @@ body {
     color: rgb(255, 255, 255);
     border-radius: 15px;
     margin: 0 33px;
-
-    min-height: 80vh;
     
     transition: opacity 3s ease;
     
@@ -99,7 +96,7 @@ body {
 
 .cards-container {
     position: relative;
-    width: 32vh;
+    width: 55%;
     height: 60vh;
     perspective: 1000px;
     margin: 0 auto;
@@ -107,8 +104,10 @@ body {
 
 .card {
     position: absolute;
-    width: 250px;
-    height: 400px;
+    width: 25%;
+    max-width: 250px;
+    aspect-ratio: 5/9;
+    /* height: 400px; */
     border-radius: 20px;
     background-color: aquamarine;
     transition: transform 1s ease,opacity 1s ease;
@@ -124,33 +123,31 @@ body {
 
 .card:nth-child(1){
     top: 30px;
-    left: 0px;
+    left: 38%;
     transform: rotateY(25deg);
 }
 
 .card:nth-child(2){
     top: 20px;
-    left: -300px;
+    left: 10%;
     transform: rotateY(20deg);
 }
 
 .card:nth-child(3){
     top: 20px;
-    left: 300px;
+    left: 65%;
     transform: rotateY(-20deg);
 }
 
 .card:nth-child(4){
     top: 0px;
-    width: 220px;
-    left: 600px;
+    left: 95%;
     transform: rotateY(-25deg);
 }
 
 .card:nth-child(5){
     top: 0px;
-    width: 220px;
-    left: -570px;
+    left: -20%;
     transform: rotateY(34deg);
 } 
 
