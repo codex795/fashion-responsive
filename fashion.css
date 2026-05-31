@@ -37,7 +37,7 @@ body {
     background-color:#878586;;
     color: rgb(255, 255, 255);
     border-radius: 15px;
-    margin: 0 33px;
+    margin: 0 2vw;
     
     transition: opacity 3s ease;
     
@@ -58,7 +58,7 @@ body {
     background-color: white;
     color: black;
     width: 38%;
-    height: 440px;
+    aspect-ratio: 16/10;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -71,11 +71,11 @@ body {
 .box2 h1 {
     transform: scale(1.5, 1.2);
     line-height: .9;
+    font-size: 2vw;
 }
 
 .box2 p {
-    font-size: 20px;
-    margin: 5px, 0;
+    font-size: 1vw;
 }
 
 .underline {
@@ -95,9 +95,7 @@ body {
 
 
 .cards-container {
-    position: relative;
-    width: 55%;
-    height: 60vh;
+    width: 65%;
     perspective: 1000px;
     margin: 0 auto;
 }
@@ -107,24 +105,21 @@ body {
     width: 25%;
     max-width: 250px;
     aspect-ratio: 5/9;
-    /* height: 400px; */
-    border-radius: 20px;
-    background-color: aquamarine;
     transition: transform 1s ease,opacity 1s ease;
-    opacity: 0;
+    /* opacity: 0; */
+   
 }
 
 .card img {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    border-radius: 20px;
+    border-radius: 12px;
 }
 
 .card:nth-child(1){
     top: 30px;
-    left: 38%;
-    transform: rotateY(25deg);
+    left: 37.5%;
 }
 
 .card:nth-child(2){
@@ -140,13 +135,13 @@ body {
 }
 
 .card:nth-child(4){
-    top: 0px;
+    top: 9px;
     left: 95%;
     transform: rotateY(-25deg);
 }
 
 .card:nth-child(5){
-    top: 0px;
+    top: 9px;
     left: -20%;
     transform: rotateY(34deg);
 } 
@@ -160,6 +155,7 @@ body {
     word-spacing: 5px;
     text-shadow: 2px 2px 10px rgb(255, 255, 255);
     color: white;
+    font-size: 1.3vw;
 }
 
 .starting2 {
