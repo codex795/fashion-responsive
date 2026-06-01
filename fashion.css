@@ -7,24 +7,29 @@ body {
     display: flex;
     align-items: flex-end;
     justify-content: center;
-    gap: 40px;
+    gap: 5vw;
     background-color: rgb(62 92 96 / 84%);
-    margin: 0 33px;
+    margin: 0 2vw;
     border-radius: 15px;
    
 }
 
 .theme img {
-    width: 40%;
-    max-width: 500px;
-    min-width: 250px;
+    width: 35.8%;
     height: auto;
 }
 
 .generalinformation {
-    max-width: 500px;
-    margin-bottom: 21vh;
+    margin-bottom: 15%;
     color: white;
+}
+
+.generalinformation h1{
+    font-size: 2.3vw;
+}
+
+.generalinformation p{
+    font-size: 1vw;
 }
 
 .active {
@@ -95,15 +100,19 @@ body {
 
 
 .cards-container {
-    width: 65%;
+    display: flex;
+    justify-content: center;
+    gap: 1.5vw;
+    /* position: relative;
+    width: 65%; */
     perspective: 1000px;
-    margin: 0 auto;
+    /* margin: 0 auto; */
 }
 
 .card {
-    position: absolute;
-    width: 25%;
-    max-width: 250px;
+    /* position: absolute; */
+    width: 15%;
+    /* max-width: 250px; */
     aspect-ratio: 5/9;
     transition: transform 1s ease,opacity 1s ease;
     /* opacity: 0; */
@@ -118,37 +127,32 @@ body {
 }
 
 .card:nth-child(1){
-    top: 30px;
-    left: 37.5%;
-}
-
-.card:nth-child(2){
-    top: 20px;
-    left: 10%;
-    transform: rotateY(20deg);
-}
-
-.card:nth-child(3){
-    top: 20px;
-    left: 65%;
-    transform: rotateY(-20deg);
-}
-
-.card:nth-child(4){
-    top: 9px;
-    left: 95%;
-    transform: rotateY(-25deg);
-}
-
-.card:nth-child(5){
-    top: 9px;
-    left: -20%;
+    padding-top: 2%;
     transform: rotateY(34deg);
-} 
+}
+.card:nth-child(2){
+    padding-top: 3%;
+    transform: rotateY(30deg);
+}
+.card:nth-child(3){
+    padding-top: 4%;
+    transform: rotateY(0);
+}
+.card:nth-child(4){
+    padding-top: 3%;
+    transform: rotateY(-30deg);
+}
+.card:nth-child(5){
+    padding-top: 2%;
+    transform: rotateY(-33deg);
+}   
+
+
 
 
 
 .starting {
+    white-space: nowrap;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -159,6 +163,8 @@ body {
 }
 
 .starting2 {
+    margin-top: 3%;
+    font-size: 1.4vw;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -168,7 +174,6 @@ body {
 
 .container {
     height: 100vh;
-    width: 194vh;
     background-color: rgb(0, 0, 0);
     display: flex
   
@@ -177,7 +182,6 @@ body {
 
 .left {
     margin: 15px;
-    height: 96vh ;
     width: 46vh;
     background-color:rgb(23 25 24);
     color: aliceblue;
@@ -235,7 +239,6 @@ body {
 
 .right {
     margin: 15px;
-    height: 96vh ;
     width: 148vh;
     background-color:rgb(23 25 24);
     border-radius: 10px;
